@@ -2,12 +2,7 @@
 .vscode/
 node_modules/
 build/
+tmp/
 temp/
-.env
-coverage
-ormconfig.json
-dist
-yarn.lock
 
-uploads/*
-!uploads/.gitkeep
+yarn.lock

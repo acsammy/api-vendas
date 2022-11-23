@@ -6,7 +6,6 @@ import ResetPasswordController from '../controllers/ResetPasswordController';
 const passwordRoutes = Router();
 const passwordForgotController = new ForgotPasswordController();
 const resetPasswordController = new ResetPasswordController();
-
 passwordRoutes.post(
   '/forgot',
   celebrate({
@@ -21,7 +20,7 @@ passwordRoutes.post(
   '/reset',
   celebrate({
     [Segments.BODY]: {
-      token: Joi.string().uuid(),
+      token: Joi.string().uuid().required(),
       password: Joi.string().required(),
       password_confirmation: Joi.string().required().valid(Joi.ref('password')),
     },

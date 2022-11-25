@@ -2,9 +2,10 @@
 .vscode/
 node_modules/
 build/
-tmp/
 temp/
-
-yarn.lock
-
 uploads/*
+dist
+
+.env
+ormconfig.json
+yarn.lock

@@ -1,6 +1,8 @@
+import process from 'process';
+
 export default {
   jwt: {
-    secret: '79867788c0708dfda92eb11a1b01f6e8',
+    secret: process.env.APP_SECRET,
     expiresIn: '1d',
   },
 };

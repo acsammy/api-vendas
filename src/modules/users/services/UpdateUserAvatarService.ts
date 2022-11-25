@@ -3,6 +3,7 @@ import { getCustomRepository } from 'typeorm';
 import User from '../typeorm/entities/User';
 import { UsersRepository } from '../typeorm/repositories/UsersRepository';
 import DiskStorageProvider from '@shared/providers/StorageProvider/DiskStorageProvider';
+import uploadConfig from '@config/upload';
 
 interface IRequest {
   user_id: string;
@@ -17,6 +18,14 @@ export default class UpdateUserAvatarService {
     const user = await usersRepository.findbyId(user_id);
     if (!user) {
       throw new AppError('User not found.');
+    }
+
+    if (uploadConfig.driver == 's3') {
+      if (user.avatar) {
+        await storageProvider.deletefile(user.avatar);
+      }
+
+      const fileName = await storageProvider.savefile(avatarFilename);
     }
 
     if (user.avatar) {

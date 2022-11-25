@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 import aws from 'aws-sdk';
 import HandlebarsMailTemplate from './HandlebarsMailTemplate';
-import mailConfig from './Mail';
+import mailConfig from './mail';
 
 interface ITemplateVariable {
   [key: string]: string | number;

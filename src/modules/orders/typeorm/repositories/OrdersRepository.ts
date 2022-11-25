@@ -24,7 +24,7 @@ export class OrdersRepository extends Repository<Order> {
 
   public async createOrder({ customer, products }: IRequest): Promise<Order> {
     const order = this.create({
-      costumer: customer,
+      customer: customer,
       order_products: products,
     });
 

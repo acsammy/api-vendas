@@ -1,5 +1,5 @@
 import customerssRoutes from '@modules/customers/routes/customers.routes';
-import orderRoutes from '@modules/orders/routes/orders.routes';
+import orderRoutes from '@modules/orders/infra/http/routes/orders.routes';
 import productsRouter from '@modules/products/routes/products.routes';
 import passwordRoutes from '@modules/users/routes/password.routes';
 import profileRoutes from '@modules/users/routes/profile.routes';

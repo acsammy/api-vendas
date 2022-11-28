@@ -10,6 +10,7 @@ import { errors } from 'celebrate';
 import uploadConfig from '@config/upload';
 import { pagination } from 'typeorm-pagination';
 import rateLimiter from './middlewares/rateLimiter';
+import '@shared/container';
 
 const app = express();
 app.use(cors());

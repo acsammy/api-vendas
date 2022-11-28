@@ -1,10 +1,10 @@
-import customerssRoutes from '@modules/customers/routes/customers.routes';
+import customerssRoutes from '@modules/customers/infra/http/routes/customers.routes';
 import orderRoutes from '@modules/orders/infra/http/routes/orders.routes';
-import productsRouter from '@modules/products/routes/products.routes';
-import passwordRoutes from '@modules/users/routes/password.routes';
-import profileRoutes from '@modules/users/routes/profile.routes';
-import sessionsRoutes from '@modules/users/routes/sessions.routes';
-import userRoutes from '@modules/users/routes/users.routes';
+import productsRouter from '@modules/products/infra/http/routes/products.routes';
+import passwordRoutes from '@modules/users/infra/http/routes/password.routes';
+import profileRoutes from '@modules/users/infra/http/routes/profile.routes';
+import sessionsRoutes from '@modules/users/infra/http/routes/sessions.routes';
+import userRoutes from '@modules/users/infra/http/routes/users.routes';
 import { Router } from 'express';
 
 const routes = Router();

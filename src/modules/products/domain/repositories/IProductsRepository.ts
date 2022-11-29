@@ -1,11 +1,12 @@
 import { ICreateProduct } from '../models/ICreateProduct';
 import { IFindProducts } from '../models/IFindProducts';
 import { IProduct } from '../models/IProduct';
+import { IUpdateStockProduct } from '../models/IUpdateStockProduct';
 
 export interface IProductsRepository {
-  findbyName(name: string): Promise<IProduct | undefined>;
+  findByName(name: string): Promise<IProduct | undefined>;
 
-  findbyId(id: string): Promise<IProduct | undefined>;
+  findById(id: string): Promise<IProduct | undefined>;
 
   findAll(): Promise<IProduct[]>;
 
@@ -16,4 +17,6 @@ export interface IProductsRepository {
   save(product: IProduct): Promise<IProduct>;
 
   remove(product: IProduct): Promise<void>;
+
+  updateStock(products: IUpdateStockProduct[]): Promise<void>;
 }

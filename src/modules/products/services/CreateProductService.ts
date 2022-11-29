@@ -1,30 +1,30 @@
 import redisCache from '@shared/cache/RedisCache';
 import AppError from '@shared/errors/AppError';
-import { getCustomRepository } from 'typeorm';
-import Product from '../infra/typeorm/entities/Product';
-import { ProductRepository } from '../infra/typeorm/repositories/ProductsRepository';
+import { inject, injectable } from 'tsyringe';
+import { ICreateProduct } from '../domain/models/ICreateProduct';
+import { IProduct } from '../domain/models/IProduct';
+import { IProductsRepository } from '../domain/repositories/IProductsRepository';
 
-interface IProduct {
-  name: string;
-  price: number;
-  quantity: number;
-}
-
+@injectable()
 export default class CreateProductService {
-  public async execute({ name, price, quantity }: IProduct): Promise<Product> {
-    const productRepository = getCustomRepository(ProductRepository);
-    const productExists = await productRepository.findbyName(name);
+  constructor(
+    @inject('ProductsRepository')
+    private productsRepository: IProductsRepository,
+  ) {}
+
+  public async execute({
+    name,
+    price,
+    quantity,
+  }: ICreateProduct): Promise<IProduct> {
+    const productExists = await this.productsRepository.findbyName(name);
 
     if (productExists) {
       throw new AppError('There is already one product with this name');
     }
-    //const redisCache = new RedisCache();
-
-    const product = productRepository.create({ name, price, quantity });
 
     await redisCache.invalidate('api-vendas-PRODUCT_LIST');
-
-    await productRepository.save(product);
+    const product = this.productsRepository.create({ name, price, quantity });
 
     return product;
   }

@@ -4,34 +4,63 @@ import { getRepository, Repository } from 'typeorm';
 import Customer from '../entities/Customer';
 
 export default class CustomersRepository implements ICustomersRepository {
-  private orm_repository: Repository<Customer>;
+  private ormRepository: Repository<Customer>;
+
   constructor() {
-    this.orm_repository = getRepository(Customer);
+    this.ormRepository = getRepository(Customer);
   }
 
   public async create({ name, email }: ICreateCustomer): Promise<Customer> {
-    const customer = this.orm_repository.create({ name, email });
-    await this.orm_repository.save(customer);
+    const customer = this.ormRepository.create({ name, email });
+
+    await this.ormRepository.save(customer);
+
     return customer;
   }
 
   public async save(customer: Customer): Promise<Customer> {
-    await this.orm_repository.save(customer);
+    await this.ormRepository.save(customer);
+
     return customer;
   }
 
+  public async remove(customer: Customer): Promise<void> {
+    await this.ormRepository.remove(customer);
+  }
+
+  public async findAll(): Promise<Customer[] | undefined> {
+    const customers = await this.ormRepository.find();
+
+    return customers;
+  }
+
   public async findbyName(name: string): Promise<Customer | undefined> {
-    const customer = this.orm_repository.findOne({ where: { name } });
+    const customer = await this.ormRepository.findOne({
+      where: {
+        name,
+      },
+    });
+
     return customer;
   }
 
   public async findbyId(id: string): Promise<Customer | undefined> {
-    const customer = this.orm_repository.findOne({ where: { id } });
+    const customer = await this.ormRepository.findOne({
+      where: {
+        id,
+      },
+    });
+
     return customer;
   }
 
   public async findbyEmail(email: string): Promise<Customer | undefined> {
-    const customer = this.orm_repository.findOne({ where: { email } });
+    const customer = await this.ormRepository.findOne({
+      where: {
+        email,
+      },
+    });
+
     return customer;
   }
 }

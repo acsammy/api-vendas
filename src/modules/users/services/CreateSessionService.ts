@@ -1,25 +1,24 @@
 import AppError from '@shared/errors/AppError';
-import { getCustomRepository } from 'typeorm';
-import User from '../infra/typeorm/entities/User';
 import { compare } from 'bcryptjs';
-import { UsersRepository } from '../infra/typeorm/repositories/UsersRepository';
-import { sign } from 'jsonwebtoken';
+import { Secret, sign } from 'jsonwebtoken';
 import authConfig from '@config/auth';
+import { inject, injectable } from 'tsyringe';
+import { IUsersRepository } from '../domain/repositories/IUsersRepository';
+import { IUserAuthenticated } from '../domain/models/IUserAuthenticated';
+import { ICreateSession } from '../domain/models/ICreateSession';
 
-interface IUser {
-  email: string;
-  password: string;
-}
-
-interface IResponse {
-  user: User;
-  token: string;
-}
-
+@injectable()
 export default class CreateSessionService {
-  public async execute({ email, password }: IUser): Promise<IResponse> {
-    const usersRepository = getCustomRepository(UsersRepository);
-    const user = await usersRepository.findbyEmail(email);
+  constructor(
+    @inject('UserRepository')
+    private userRepository: IUsersRepository,
+  ) {}
+
+  public async execute({
+    email,
+    password,
+  }: ICreateSession): Promise<IUserAuthenticated> {
+    const user = await this.userRepository.findbyEmail(email);
 
     if (!user) {
       throw new AppError('Incorrect email/password combination.', 401);
@@ -31,7 +30,7 @@ export default class CreateSessionService {
       throw new AppError('Incorrect email/password combination.', 401);
     }
 
-    const token = sign({}, authConfig.jwt.secret as string, {
+    const token = sign({}, authConfig.jwt.secret as Secret, {
       subject: user.id,
       expiresIn: authConfig.jwt.expiresIn,
     });

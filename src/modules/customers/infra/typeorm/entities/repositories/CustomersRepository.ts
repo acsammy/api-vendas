@@ -1,7 +1,7 @@
 import { ICreateCustomer } from '@modules/customers/domain/models/ICreateCustomer';
 import { ICustomersRepository } from '@modules/customers/domain/repositories/ICustomersRepositorys';
 import { getRepository, Repository } from 'typeorm';
-import Customer from '../entities/Customer';
+import Customer from '../Customer';
 
 export default class CustomersRepository implements ICustomersRepository {
   private ormRepository: Repository<Customer>;

@@ -5,6 +5,7 @@ build/
 temp/
 uploads/*
 dist
+.docker/dbdata
 
 .env
 ormconfig.json
